@@ -64,9 +64,174 @@ const applyGaussianBlur = async (command) => {
     });
 };
 
+const applyHighPass = async (command) => {
+
+    let options = command.options;
+    let layerId = options.layerId;
+
+    let layer = findLayer(layerId);
+
+    if (!layer) {
+        throw new Error(
+            `applyHighPass : Could not find layerId : ${layerId}`
+        );
+    }
+
+    await execute(async () => {
+        await layer.applyHighPass(options.radius);
+    });
+};
+
+const applySharpen = async (command) => {
+
+    let options = command.options;
+    let layerId = options.layerId;
+
+    let layer = findLayer(layerId);
+
+    if (!layer) {
+        throw new Error(
+            `applySharpen : Could not find layerId : ${layerId}`
+        );
+    }
+
+    await execute(async () => {
+        await layer.applySharpen();
+    });
+};
+
+const applySharpenMore = async (command) => {
+
+    let options = command.options;
+    let layerId = options.layerId;
+
+    let layer = findLayer(layerId);
+
+    if (!layer) {
+        throw new Error(
+            `applySharpenMore : Could not find layerId : ${layerId}`
+        );
+    }
+
+    await execute(async () => {
+        await layer.applySharpenMore();
+    });
+};
+
+const applySharpenEdges = async (command) => {
+
+    let options = command.options;
+    let layerId = options.layerId;
+
+    let layer = findLayer(layerId);
+
+    if (!layer) {
+        throw new Error(
+            `applySharpenEdges : Could not find layerId : ${layerId}`
+        );
+    }
+
+    await execute(async () => {
+        await layer.applySharpenEdges();
+    });
+};
+
+const applyUnSharpMask = async (command) => {
+
+    let options = command.options;
+    let layerId = options.layerId;
+
+    let layer = findLayer(layerId);
+
+    if (!layer) {
+        throw new Error(
+            `applyUnSharpMask : Could not find layerId : ${layerId}`
+        );
+    }
+
+    await execute(async () => {
+        await layer.applyUnSharpMask(options.amount, options.radius, options.threshold);
+    });
+};
+
+const applyLensBlur = async (command) => {
+
+    let options = command.options;
+    let layerId = options.layerId;
+
+    let layer = findLayer(layerId);
+
+    if (!layer) {
+        throw new Error(
+            `applyLensBlur : Could not find layerId : ${layerId}`
+        );
+    }
+
+    await execute(async () => {
+        await layer.applyLensBlur(
+            options.source,
+            options.focalDistance,
+            options.invertDepthMap,
+            options.shape,
+            options.radius,
+            options.bladeCurvature,
+            options.rotation,
+            options.brightness,
+            options.threshold,
+            options.amount,
+            options.distribution,
+            options.monochromatic
+        );
+    });
+};
+
+const applyAddNoise = async (command) => {
+
+    let options = command.options;
+    let layerId = options.layerId;
+
+    let layer = findLayer(layerId);
+
+    if (!layer) {
+        throw new Error(
+            `applyAddNoise : Could not find layerId : ${layerId}`
+        );
+    }
+
+    await execute(async () => {
+        await layer.applyAddNoise(options.amount, options.distribution, options.monochromatic);
+    });
+};
+
+const applyDustAndScratches = async (command) => {
+
+    let options = command.options;
+    let layerId = options.layerId;
+
+    let layer = findLayer(layerId);
+
+    if (!layer) {
+        throw new Error(
+            `applyDustAndScratches : Could not find layerId : ${layerId}`
+        );
+    }
+
+    await execute(async () => {
+        await layer.applyDustAndScratches(options.radius, options.threshold);
+    });
+};
+
 const commandHandlers = {
     applyMotionBlur,
     applyGaussianBlur,
+    applyHighPass,
+    applySharpen,
+    applySharpenMore,
+    applySharpenEdges,
+    applyUnSharpMask,
+    applyLensBlur,
+    applyAddNoise,
+    applyDustAndScratches,
 };
 
 module.exports = {
