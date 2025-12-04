@@ -1512,6 +1512,263 @@ def apply_motion_blur(layer_id: int, angle: int = 0, distance: float = 30):
     return sendCommand(command)
 
 
+@mcp.tool()
+def apply_high_pass(layer_id: int, radius: float = 10.0):
+    """Applies a High Pass filter to the layer with the specified ID.
+    
+    High Pass is commonly used for edge detection and sharpening workflows.
+    It retains edge detail while removing low-frequency color variations.
+
+    Args:
+        layer_id (int): ID of layer to apply the filter to
+        radius (float): The radius in pixels determining which edges to preserve. 
+            Default is 10.0. Valid values range from 0.1 to 1000.
+
+    Returns:
+        dict: Response from the Photoshop operation
+        
+    Raises:
+        RuntimeError: If the operation fails or times out
+    """
+
+    command = createCommand("applyHighPass", {
+        "layerId":layer_id,
+        "radius":radius,
+    })
+
+    return sendCommand(command)
+
+
+@mcp.tool()
+def apply_sharpen(layer_id: int):
+    """Applies basic Sharpen filter to the layer with the specified ID.
+    
+    This is a simple sharpening filter that increases contrast between adjacent pixels.
+
+    Args:
+        layer_id (int): ID of layer to be sharpened
+
+    Returns:
+        dict: Response from the Photoshop operation
+        
+    Raises:
+        RuntimeError: If the operation fails or times out
+    """
+
+    command = createCommand("applySharpen", {
+        "layerId":layer_id,
+    })
+
+    return sendCommand(command)
+
+
+@mcp.tool()
+def apply_sharpen_more(layer_id: int):
+    """Applies a stronger Sharpen filter to the layer with the specified ID.
+    
+    This applies a more intense version of the basic sharpen filter.
+
+    Args:
+        layer_id (int): ID of layer to be sharpened
+
+    Returns:
+        dict: Response from the Photoshop operation
+        
+    Raises:
+        RuntimeError: If the operation fails or times out
+    """
+
+    command = createCommand("applySharpenMore", {
+        "layerId":layer_id,
+    })
+
+    return sendCommand(command)
+
+
+@mcp.tool()
+def apply_sharpen_edges(layer_id: int):
+    """Applies Sharpen Edges filter to the layer with the specified ID.
+    
+    This sharpens only the edges while preserving overall smoothness.
+
+    Args:
+        layer_id (int): ID of layer to be sharpened
+
+    Returns:
+        dict: Response from the Photoshop operation
+        
+    Raises:
+        RuntimeError: If the operation fails or times out
+    """
+
+    command = createCommand("applySharpenEdges", {
+        "layerId":layer_id,
+    })
+
+    return sendCommand(command)
+
+
+@mcp.tool()
+def apply_unsharp_mask(layer_id: int, amount: float = 100.0, radius: float = 1.0, threshold: int = 0):
+    """Applies Unsharp Mask filter to the layer with the specified ID.
+    
+    This is a professional sharpening technique that provides precise control
+    over the sharpening effect.
+
+    Args:
+        layer_id (int): ID of layer to apply the filter to
+        amount (float): The strength of the sharpening effect as a percentage. 
+            Default is 100.0. Valid values range from 1 to 500.
+        radius (float): The radius in pixels determining the size of the area 
+            to be sharpened. Default is 1.0. Valid values range from 0.1 to 1000.
+        threshold (int): The threshold level that determines which pixels are 
+            sharpened. Default is 0. Valid values range from 0 to 255.
+
+    Returns:
+        dict: Response from the Photoshop operation
+        
+    Raises:
+        RuntimeError: If the operation fails or times out
+    """
+
+    command = createCommand("applyUnSharpMask", {
+        "layerId":layer_id,
+        "amount":amount,
+        "radius":radius,
+        "threshold":threshold,
+    })
+
+    return sendCommand(command)
+
+
+@mcp.tool()
+def apply_lens_blur(
+    layer_id: int,
+    source: str = "NONE",
+    focal_distance: int = 0,
+    invert_depth_map: bool = False,
+    shape: str = "HEXAGON",
+    radius: int = 15,
+    blade_curvature: int = 0,
+    rotation: int = 0,
+    brightness: int = 0,
+    threshold: int = 255,
+    amount: int = 0,
+    distribution: str = "UNIFORM",
+    monochromatic: bool = False
+):
+    """Applies Lens Blur filter to the layer with the specified ID.
+    
+    This creates a depth-of-field blur effect similar to camera lens blur.
+
+    Args:
+        layer_id (int): ID of layer to apply the filter to
+        source (str): The depth map source. Options: "NONE", "TRANSPARENCY", 
+            "LAYERMASK". Default is "NONE".
+        focal_distance (int): The focal distance (0-255). Default is 0.
+        invert_depth_map (bool): Whether to invert the depth map. Default is False.
+        shape (str): The iris shape. Options: "TRIANGLE", "SQUARE", "PENTAGON", 
+            "HEXAGON", "HEPTAGON", "OCTAGON". Default is "HEXAGON".
+        radius (int): The blur radius (0-100). Default is 15.
+        blade_curvature (int): The blade curvature (-100 to 100). Default is 0.
+        rotation (int): The iris rotation in degrees (0-360). Default is 0.
+        brightness (int): The specular highlight brightness (0-100). Default is 0.
+        threshold (int): The specular highlight threshold (0-255). Default is 255.
+        amount (int): The noise amount (0-100). Default is 0.
+        distribution (str): The noise distribution. Options: "UNIFORM", "GAUSSIAN". 
+            Default is "UNIFORM".
+        monochromatic (bool): Whether noise is monochromatic. Default is False.
+
+    Returns:
+        dict: Response from the Photoshop operation
+        
+    Raises:
+        RuntimeError: If the operation fails or times out
+    """
+
+    command = createCommand("applyLensBlur", {
+        "layerId":layer_id,
+        "source":source,
+        "focalDistance":focal_distance,
+        "invertDepthMap":invert_depth_map,
+        "shape":shape,
+        "radius":radius,
+        "bladeCurvature":blade_curvature,
+        "rotation":rotation,
+        "brightness":brightness,
+        "threshold":threshold,
+        "amount":amount,
+        "distribution":distribution,
+        "monochromatic":monochromatic,
+    })
+
+    return sendCommand(command)
+
+
+@mcp.tool()
+def apply_add_noise(layer_id: int, amount: float = 10.0, distribution: str = "UNIFORM", monochromatic: bool = False):
+    """Applies Add Noise filter to the layer with the specified ID.
+    
+    This adds random pixels to the image, useful for creating film grain effects
+    or reducing banding.
+
+    Args:
+        layer_id (int): ID of layer to apply the filter to
+        amount (float): The amount of noise as a percentage. Default is 10.0. 
+            Valid values range from 0.1 to 400.
+        distribution (str): The noise distribution type. Options: "UNIFORM", 
+            "GAUSSIAN". Default is "UNIFORM".
+        monochromatic (bool): Whether the noise should be monochromatic (grayscale). 
+            Default is False.
+
+    Returns:
+        dict: Response from the Photoshop operation
+        
+    Raises:
+        RuntimeError: If the operation fails or times out
+    """
+
+    command = createCommand("applyAddNoise", {
+        "layerId":layer_id,
+        "amount":amount,
+        "distribution":distribution,
+        "monochromatic":monochromatic,
+    })
+
+    return sendCommand(command)
+
+
+@mcp.tool()
+def apply_dust_and_scratches(layer_id: int, radius: int = 1, threshold: int = 0):
+    """Applies Dust & Scratches filter to the layer with the specified ID.
+    
+    This reduces noise by blending dissimilar pixels, useful for cleaning up
+    scanned images or removing small imperfections.
+
+    Args:
+        layer_id (int): ID of layer to apply the filter to
+        radius (int): The radius in pixels that determines how far to search 
+            for dissimilar pixels. Default is 1. Valid values range from 1 to 100.
+        threshold (int): The threshold that determines how dissimilar pixels 
+            must be before they are eliminated. Default is 0. Valid values 
+            range from 0 to 255.
+
+    Returns:
+        dict: Response from the Photoshop operation
+        
+    Raises:
+        RuntimeError: If the operation fails or times out
+    """
+
+    command = createCommand("applyDustAndScratches", {
+        "layerId":layer_id,
+        "radius":radius,
+        "threshold":threshold,
+    })
+
+    return sendCommand(command)
+
+
 @mcp.resource("config://get_instructions")
 def get_instructions() -> str:
     """Read this first! Returns information and instructions on how to use Photoshop and this API"""
